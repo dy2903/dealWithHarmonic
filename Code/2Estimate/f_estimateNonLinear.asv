@@ -11,34 +11,9 @@ function [ nonLinearParams ]  = f_estimateNonLinear(data, fin,order, NumChannel,
     dataAfterFFT       =  fft  (dataWithWindow);
     decimationInFre  =  zeros(order,NumChannel);
 	YdB        =   20*log10(abs(dataAfterFFT)*2/N);%
-
 % # ************ get the point with misError************
-     % for i = 1:NumChannel
-        % if (fin + (i-1)*fsPerChannel <=  fs_adc)
-             % decimationInFre(i) =  dataAfterFFT(fix((i-1)*testSampPoint/NumChannel+fin*testSampPoint/fs_adc+1));
-        % else
-            % decimationInFre(i)  =  dataAfterFFT(fix((i-1)*testSampPoint/NumChannel+fin*testSampPoint/fs_adc+1-testSampPoint));
-        % end
-    % end
-    % decimationInFre = decimationInFre*Ts/2/pi;
-	
 	t_m = zeros(order+1 , NumChannel);
 	t_mTmp = zeros (order + 1 , NumChannel );
-	% for l = 1 : order + 1
-		% for m = 1 : NumChannel 
-			% decimaFre= -(l - 1) * fin + ( m - 1) * fs_adc / M ;
-			% if decimaFre <  0 
-				% fre2Point = (N / fs_adc) * (decimaFre + fs_adc);
-				% t_m (l , m) = dataAfterFFT (fix(fre2Point) + 1);
-				% % t_m (l , m) = dataAfterFFT (fix( (N / fs_adc ) * (decimaFre + fs_adc / N + fs_adc)) ) ;
-			% else
-				% % fre2Point = (N / fs_adc) * decimaFre;
-				% % t_m (l , m) = dataAfterFFT (fix( (N / fs_adc ) * ( decimaFre + fs_adc / N) ));
-				% fre2Point = (N / fs_adc) * (decimaFre);
-				% t_m (l , m) = dataAfterFFT (fix(fre2Point) + 1);
-				% end
-		% end
-	% end
 	decimaFre = zeros (order + 1 , M);
 	for l = 1 : order + 1
 		for m = 1 : M
@@ -76,12 +51,47 @@ function [ nonLinearParams ]  = f_estimateNonLinear(data, fin,order, NumChannel,
 	for i = 1 : order + 1
 		C_estim (i , :) = ifft (s_addParam (i , :) , M);
 	end
-	nonLinearParams = abs (C_estim);
+	C_estim = abs (C_estim);
+	% nonLinearParams = abs (C_estim);
 	
-load ('../Data/Parameter.mat' );
-	ratio = nonLinearParams ./ nonLineError; 
+% ================for Test ****************	
+	load ('../../Data/Parameter.mat' );
+	ratio = C_estim ./ nonLineError; 
+    
+	ratioMean = (mean (ratio'))';
 	
-    % % # ********************* IFFT**************#########
+	ratioTmp = ratioMean * ones (1 , order + 1);
+	nonLinearParams = C_estim ./ ratioTmp;
+	
+	% nonLinearTmp = reshape (nonLinearParams , 1 , []);
+	residualErrors =  abs (nonLinearParams - nonLineError) ./ nonLineError;
+	meanResidual = mean (reshape (residualErrors , 1 , []));
+	
+   
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    % for i = 1:NumChannel
+        % if (fin + (i-1)*fsPerChannel <=  fs_adc)
+             % decimationInFre(i) =  dataAfterFFT(fix((i-1)*testSampPoint/NumChannel+fin*testSampPoint/fs_adc+1));
+        % else
+            % decimationInFre(i)  =  dataAfterFFT(fix((i-1)*testSampPoint/NumChannel+fin*testSampPoint/fs_adc+1-testSampPoint));
+        % end
+    % end
+    % decimationInFre = decimationInFre*Ts/2/pi;
+	 % % # ********************* IFFT**************#########
     % A_time_domain = ifft(decimationInFre,NumChannel);
     % % # *********************get the angle **************#########
     % pha         =  zeros(1,NumChannel);
@@ -97,4 +107,3 @@ load ('../Data/Parameter.mat' );
     % % # *********** result *********** 
     % %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  
  % nonLinear = pha*fs_adc/fin/2/pi ;
-end
