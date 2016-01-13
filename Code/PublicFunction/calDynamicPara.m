@@ -50,6 +50,22 @@ end
 	SINAD=10*log10(powerOfBase/(P_noise+THD));
 	ENOB=(SINAD-1.76)/6.02;
 	SFDR=F_base-max_harmonics_dB;
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	
 	% noplot=0;	
 	% %=====================Draw the pic =====================%	

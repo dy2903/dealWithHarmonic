@@ -29,8 +29,9 @@ function [ nonLinearParams ]  = f_estimateNonLinear(data, fin,order, NumChannel,
 			end
 		end
 	end
-	unit = 1e6;
-	decimaFre = decimaFre / unit;
+	save('../../Data/decimaFre.mat','decimaFre' );
+	% unit = 1e6;
+	% decimaFre = decimaFre / unit;
 	
 	% *************** get the s_m ****************
 	s_m = zeros (order+1 , M);
