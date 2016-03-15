@@ -85,7 +85,7 @@ end
 
 
 
-%==================default===================
+
 
     % for i = 1:NumChannel
         % if (fin + (i-1)*fsPerChannel <=  fs_adc)

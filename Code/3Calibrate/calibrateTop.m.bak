@@ -14,13 +14,13 @@ order = 3;
  %==================dataOfPilot====================
 load('../../Data/dataOfPilot.mat')
 
-dataToCalibrate = dataOfPilot;
-[row , col ] = size (dataToCalibrate);
+% dataToCalibrate = dataOfPilot;
+% [row , col ] = size (dataToCalibrate);
 %
 %  ================== figure ==================
 fig_num    = 1 ; 
 NumOfFigure = 2 ; 
 
 load ('../../Data/Parameter.mat');
-[SINAD , ENOB , SFDR] = calibrateHarmonic(dataToCalibrate, f_test ,order, numOfChannel,fs_adc , nonLineError)
+[SINAD , ENOB , SFDR] = calibrateHarmonic(dataOfPilot, f_test ,order, numOfChannel,fs_adc , nonLineError)
 

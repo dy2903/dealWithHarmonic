@@ -50,17 +50,17 @@ function drawPic (y,fs,fin,M , varargin)
 	end
 		
 	% % ***************to show the harmonic ************
-	% if nargin >= 5
-		% posOfHamonic = (varargin{1});
-		% HD = (varargin {2});		
-		% locationHarmonic = posOfHamonic*fs/unit;
-		% for i = 2 : orderToShow 
-			% plot (locationHarmonic (i) , HD (i) , 'k^');
-			% text(locationHarmonic(i),HD(i) + 3,['H',num2str(i)],'fontname','Arial','fontsize',fontSize);
-			% legend ('harmonic');
-		% end	
-		% hold on;
-	% end 
+	if nargin >= 5
+		posOfHamonic = (varargin{1});
+		HD = (varargin {2});		
+		locationHarmonic = posOfHamonic*fs/unit;
+		for i = 2 : orderToShow 
+			plot (locationHarmonic (i) , HD (i) , 'k^');
+			text(locationHarmonic(i),HD(i) + 3,['H',num2str(i)],'fontname','Arial','fontsize',fontSize);
+			legend ('harmonic');
+		end	
+		hold on;
+	end 
 	
 	
 	% =========================mark the gain and offset===============

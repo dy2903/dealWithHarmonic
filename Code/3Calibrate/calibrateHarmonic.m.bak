@@ -19,7 +19,7 @@ function  [SINAD , ENOB , SFDR] = calibrateHarmonic(data, fin,order, NumChannel,
 	F_l(2 , :) = F_l (2 , :) - ones (1 , N);
     
     	% path(path,'F:\1TheisProject\WithHarmonic\dealWithHarmonic\PublicFunction');
-	path(path,'../PublicFunction');
+	  path(path,'../PublicFunction');
 	
 	figNum = 1;
 	figure (figNum);	 
