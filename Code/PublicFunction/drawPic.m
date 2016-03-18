@@ -19,7 +19,7 @@ function drawPic (y,fs,fin,M , varargin)
 		% *************begin to plot, 1 ~fs/2********************
 		plot([0:N/2-1]*fs/(N*unit),YdB(1:N/2)-F_base,'Color', [0 0 0.54] , 'LineWidth',2 );	
 		grid on;
-		axis( [-1  (N/2-1)*fs/N/unit -150 10]);	
+		axis( [-1  (N/2-1)*fs/N/unit -140 10]);	
 		% **************mark the fin*************
 		finDraw = fin/unit;
 		if unit == 10^6
